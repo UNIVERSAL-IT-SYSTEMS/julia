@@ -161,16 +161,16 @@ varm{T}(A::AbstractArray{T}, m::AbstractArray, region; corrected::Bool=true) =
 
 function var{T}(A::AbstractArray{T}; corrected::Bool=true, mean=nothing)
     convert(real(momenttype(T)),
-            mean == 0 ? varzm(A; corrected=corrected) :
             mean === nothing ? varm(A, Base.mean(A); corrected=corrected) :
-            isa(mean, Number) ? varm(A, mean::Number; corrected=corrected) :
+            isequal(mean, 0) ? varzm(A; corrected=corrected) :
+            isa(mean, Number) ? varm(A, mean; corrected=corrected) :
             throw(ArgumentError("invalid value of mean, $(mean)::$(typeof(mean))")))::real(momenttype(T))
 end
 
 function var(A::AbstractArray, region; corrected::Bool=true, mean=nothing)
-    mean == 0 ? varzm(A, region; corrected=corrected) :
     mean === nothing ? varm(A, Base.mean(A, region), region; corrected=corrected) :
-    isa(mean, AbstractArray) ? varm(A, mean::AbstractArray, region; corrected=corrected) :
+    isa(mean, AbstractArray) ? varm(A, mean, region; corrected=corrected) :
+    isequal(mean, 0) ? varzm(A, region; corrected=corrected) :
     throw(ArgumentError("invalid value of mean, $(mean)::$(typeof(mean))"))
 end
 

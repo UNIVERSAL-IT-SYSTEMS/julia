@@ -392,8 +392,8 @@ const keywords = Dict{Symbol, DocStr}()
 isdoc(s::AbstractString) = true
 
 isdoc(x) = isexpr(x, :string) ||
-    (isexpr(x, :macrocall) && x.args[1] == Symbol("@doc_str")) ||
-    (isexpr(x, :call) && x.args[1] == Base.Markdown.doc_str)
+    (isexpr(x, :macrocall) && x.args[1] === Symbol("@doc_str")) ||
+    (isexpr(x, :call) && x.args[1] === Base.Markdown.doc_str)
 
 function unblock(ex)
     isexpr(ex, :block) || return ex
@@ -497,7 +497,7 @@ function moduledoc(meta, def, def′)
     docex = Expr(:call, doc!, bindingexpr(name),
         docexpr(lazy_iterpolate(meta), metadata(name))
     )
-    if def == nothing
+    if def === nothing
         esc(:(eval($name, $(quot(docex)))))
     else
         def = unblock(def)
