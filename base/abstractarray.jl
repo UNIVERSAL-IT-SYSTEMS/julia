@@ -996,7 +996,7 @@ end
 
 function isequal(A::AbstractArray, B::AbstractArray)
     if A === B return true end
-    if size(A) != size(B)
+    if indices(A) != indices(B)
         return false
     end
     if isa(A,Range) != isa(B,Range)
@@ -1019,7 +1019,7 @@ function lexcmp(A::AbstractArray, B::AbstractArray)
 end
 
 function (==)(A::AbstractArray, B::AbstractArray)
-    if size(A) != size(B)
+    if indices(A) != indices(B)
         return false
     end
     if isa(A,Range) != isa(B,Range)
