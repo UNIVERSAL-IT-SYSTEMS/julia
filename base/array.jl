@@ -909,6 +909,7 @@ function findin(a, b)
 end
 
 # Copying subregions
+# TODO: DEPRECATE FOR #14770
 function indcopy(sz::Dims, I::Vector)
     n = length(I)
     s = sz[n]
